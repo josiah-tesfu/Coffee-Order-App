@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+// Represents a drink
 public class SpecificDrink implements Cloneable {
 
     //fields

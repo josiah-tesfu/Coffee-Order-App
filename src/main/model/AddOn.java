@@ -1,5 +1,6 @@
 package model;
 
+// Represents an add-on having a name and amount.
 public class AddOn {
 
     String addOnName;

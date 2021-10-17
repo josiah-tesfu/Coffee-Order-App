@@ -1,3 +1,8 @@
+/*
+ *
+ */
+
+
 package ui;
 
 import model.Order;
@@ -5,6 +10,7 @@ import model.SpecificDrink;
 
 import java.util.Scanner;
 
+// Coffee order application
 public class OrderApp {
     private Scanner input;
     private Order currentOrder;
@@ -71,7 +77,6 @@ public class OrderApp {
                 break;
         }
     }
-
 
     private void displayMenu() {
         System.out.println("HOT COFFEE DRINKS MENU" + '\n');
@@ -172,7 +177,6 @@ public class OrderApp {
         currentOrder.setToGo(toGo);
     }
 
-
     private void editDrinkInOrder() {
         String drinkToChange;
         System.out.println("SELECT DRINK IN YOUR ORDER TO EDIT");
@@ -223,13 +227,11 @@ public class OrderApp {
             displayDrinkInfo(currentOrder.getDrink(i));
             System.out.println();
         }
-
         if (currentOrder.isToGo()) {
             System.out.println("Ordered to go");
         } else {
             System.out.println("Ordered for here");
         }
-
         System.out.println("total: $" + currentOrder.getTotal());
         System.out.println("Tax: $" + currentOrder.getTax());
         System.out.println("Subtotal: $" + currentOrder.getSubtotal());

@@ -1,8 +1,14 @@
+/*
+ * Class to instantiate an order. Contains a list of drink objects.
+ * Implements the basis of user stories involving adding and removing drink objects.
+ */
+
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents an order
 public class Order {
 
     //fields
