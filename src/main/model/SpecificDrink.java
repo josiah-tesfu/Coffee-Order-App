@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SpecificDrink implements Cloneable {
 
@@ -19,29 +20,29 @@ public class SpecificDrink implements Cloneable {
         this.drinkName = drinkName;
         this.drinkSize = "medium";
         this.toGo = toGo;
-
-        setPrice(this.drinkName);
+        this.drinkPrice = 0.0;
         setCupType(this.toGo);
     }
 
     public void setPrice(String drinkName) {
+        drinkName = drinkName.toLowerCase();
         switch (drinkName) {
-            case "Drip Coffee":
+            case "drip coffee":
                 this.drinkPrice = priceCalculate(2.2);
                 break;
-            case "Americano":
+            case "americano":
                 this.drinkPrice = priceCalculate(3.1);
                 break;
-            case "Espresso":
+            case "espresso":
                 this.drinkPrice = 1.8;
                 break;
-            case "Macchiato":
+            case "macchiato":
                 this.drinkPrice = 3.5;
                 break;
-            case "Cappuccino":
+            case "cappuccino":
                 this.drinkPrice = priceCalculate(4.2);
                 break;
-            case "Latte":
+            case "latte":
                 this.drinkPrice = priceCalculate(4.1);
                 break;
         }
@@ -51,15 +52,11 @@ public class SpecificDrink implements Cloneable {
         this.drinkSize = drinkSize;
     }
 
-    public void setToGo(boolean toGo) {
-        this.toGo = toGo;
-    }
-
     public double priceCalculate(double price) {
         int drinkSizeNum = 0;
-        String drinkSizeCalc = drinkSize.toLowerCase();
+        String drinkSize = this.drinkSize.toLowerCase();
 
-        switch (drinkSizeCalc) {
+        switch (drinkSize) {
             case "small":
                 drinkSizeNum = 12;
                 break;
@@ -110,8 +107,8 @@ public class SpecificDrink implements Cloneable {
     }
 
     public void addOn(String addOn) {
-        //addOn.toLowerCase();
-        getAddOn(addOn).incrementNum(addOn);
+        addOn = addOn.toLowerCase();
+        getAddOn(addOn).incrementNum();
 
         if (addOn.equals("espresso shot")) {
             drinkPrice += 1;
@@ -125,10 +122,6 @@ public class SpecificDrink implements Cloneable {
 
     public Double getDrinkPrice() {
         return drinkPrice;
-    }
-
-    public boolean isToGo() {
-        return toGo;
     }
 
     public String getCupType() {

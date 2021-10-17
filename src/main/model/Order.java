@@ -19,27 +19,29 @@ public class Order {
 
     public void addToOrder(SpecificDrink drink) {
         currentOrder.add(drink);
-        total += drink.getDrinkPrice();
-        tax = (1.05 * total);
-        subtotal = total + tax;
         numberOfItems++;
         drink.initAddOns();
     }
 
-    public void addToOrder(String drinkName) {
-        SpecificDrink drink = new SpecificDrink(drinkName, isToGo());
-        addToOrder(drink);
+    public void addPriceToDrink(SpecificDrink drink) {
+        drink.setPrice(drink.getDrinkName());
+        total += drink.getDrinkPrice();
+        tax = (0.05 * total);
+        subtotal = (double)Math.round((total + tax) * 100d) / 100d;
     }
 
 //remove implementation for increment and decrement OR fix current implementation
-    public void incrementAmount(String drinkName) throws CloneNotSupportedException {
+    public boolean incrementDrink(String drinkName) throws CloneNotSupportedException {
         if (currentOrder.contains(getDrink(drinkName))) {
             SpecificDrink drinkCopy = (SpecificDrink) getDrink(drinkName).clone();
             addToOrder(drinkCopy);
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public boolean decrementAmount(String drinkName) {
+    public boolean removeFromOrder(String drinkName) {
         if (currentOrder.contains(getDrink(drinkName))) {
             total -= getDrink(drinkName).getDrinkPrice();
             tax = (1.05 * total);
@@ -53,6 +55,15 @@ public class Order {
         }
     }
 
+    public boolean checkIfInOrder(String drinkName) {
+        for (SpecificDrink item: currentOrder) {
+            if (item.getDrinkName().equals(drinkName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public SpecificDrink getDrink(String drinkName) {
         for (SpecificDrink item: currentOrder) {
             if (item.getDrinkName().equals(drinkName)) {
@@ -62,12 +73,12 @@ public class Order {
         return null;
     }
 
-    public void setToGo(boolean toGo) {
-        this.toGo = toGo;
-    }
-
     public SpecificDrink getDrink(int index) {
         return currentOrder.get(index);
+    }
+
+    public void setToGo(boolean toGo) {
+        this.toGo = toGo;
     }
 
     public double getTotal() {
@@ -75,7 +86,7 @@ public class Order {
     }
 
     public double getTax() {
-        return tax;
+        return (double)Math.round(tax * 100d) / 100d;
     }
 
     public double getSubtotal() {
