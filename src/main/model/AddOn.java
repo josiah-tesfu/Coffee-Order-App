@@ -6,6 +6,7 @@ public class AddOn {
     String addOnName;
     int addOnNum;
 
+    //EFFECTS: Creates an add-on and sets add-on number to 0
     public AddOn(String addOnName) {
         this.addOnName = addOnName;
         this.addOnNum = 0;

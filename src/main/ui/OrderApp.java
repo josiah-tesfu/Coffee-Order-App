@@ -15,10 +15,14 @@ public class OrderApp {
     private Scanner input;
     private Order currentOrder;
 
+    //EFFECTS: Runs the coffee order application
     public OrderApp() throws CloneNotSupportedException {
         runOrder();
     }
 
+    //MODIFIES: this
+    //EFFECTS: processes user input
+    //NOTE: runOrder() method is loosely based on runTeller() from the Teller application
     private void runOrder() throws CloneNotSupportedException {
         input = new Scanner(System.in);
         boolean orderInProgress = true;
@@ -40,6 +44,7 @@ public class OrderApp {
         System.out.println("ORDER COMPLETE");
     }
 
+    //EFFECTS: Displays action options to user
     private void commandOptions() {
         System.out.println("SELECT ONE OF THE FOLLOWING");
         System.out.println("   - VIEW MENU: SELECT (MENU)");
@@ -52,6 +57,8 @@ public class OrderApp {
         System.out.println("   - COMPLETE ORDER: SELECT (ORDER)");
     }
 
+    //MODIFIES: this
+    //EFFECTS: processes user command
     private void processCommand(String command) throws CloneNotSupportedException {
         switch (command) {
             case "menu":
@@ -78,12 +85,15 @@ public class OrderApp {
         }
     }
 
+    //EFFECTS: Displays drink menu to user
     private void displayMenu() {
         System.out.println("HOT COFFEE DRINKS MENU" + '\n');
         System.out.printf("%-20s%-20s%-20s%n%n", "Drip Coffee", "Americano", "Espresso");
         System.out.printf("%-20s%-20s%-20s%n%n", "Macchiato", "Cappuccino", "Latte");
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to choose a drink and adds it to current order
     private void doAddToOrder() {
         SpecificDrink drink;
 
@@ -102,6 +112,7 @@ public class OrderApp {
         System.out.println(drink.getDrinkName() + " HAS BEEN ADDED TO YOUR ORDER");
     }
 
+    //EFFECTS: Returns true if drinkName is a valid drink name, returns false otherwise
     public boolean checkName(String drinkName) {
         String[] drinkNames = {"drip coffee", "americano", "latte", "cappuccino", "macchiato", "espresso"};
         for (String item: drinkNames) {
@@ -112,6 +123,8 @@ public class OrderApp {
         return false;
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to choose a drink from current order and removes it
     private void doRemoveFromOrder() {
         String drinkToRemove;
         System.out.println("SELECT DRINK TO REMOVE");
@@ -123,6 +136,8 @@ public class OrderApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to choose a drink from current order and duplicates it
     private void doIncrementDrink() throws CloneNotSupportedException {
         String drinkName;
 
@@ -135,6 +150,8 @@ public class OrderApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to customize drink size for drink in current order
     private void customizeDrinkSize(String drinkName) {
         String drinkSize = "";
         if (!(drinkName.equals("Macchiato") || drinkName.equals("Espresso"))) {
@@ -146,6 +163,8 @@ public class OrderApp {
         currentOrder.getDrink(drinkName).setDrinkSize(drinkSize);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to customize add-ons for drink in current order
     private void includeAddOn(String drinkName) {
         System.out.println("ADD-ONS? (YES / NO)");
         String includeAddOns = input.nextLine().toLowerCase();
@@ -166,6 +185,8 @@ public class OrderApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompts user to customize to-go status for order
     private void customizeToGo() {
         boolean toGo = false;
         String hereOrGo;
@@ -177,6 +198,8 @@ public class OrderApp {
         currentOrder.setToGo(toGo);
     }
 
+    //MODIFIES: this
+    //EFFECTS: prompts user to select a drink from current order and customize it
     private void editDrinkInOrder() {
         String drinkToChange;
         System.out.println("SELECT DRINK IN YOUR ORDER TO EDIT");
@@ -197,6 +220,7 @@ public class OrderApp {
         }
     }
 
+    //EFFECTS: Prompts user to select a drink in current order and displays its info
     private void viewDrink() {
         System.out.println("SELECT DRINK TO VIEW");
         String drinkToView = input.nextLine().toLowerCase();
@@ -207,6 +231,7 @@ public class OrderApp {
         }
     }
 
+    //EFFECTS: Displays info for drink in current order
     private void displayDrinkInfo(SpecificDrink drink) {
         System.out.println("Drink: " + " " + drink.getDrinkName());
         System.out.println("   Cup type: " + drink.getCupType());
@@ -222,6 +247,7 @@ public class OrderApp {
         }
     }
 
+    //EFFECTS: Displays order info for current order
     private void displayOrderInfo() {
         for (int i = 0; i < currentOrder.getNumberOfItems(); i++) {
             displayDrinkInfo(currentOrder.getDrink(i));
