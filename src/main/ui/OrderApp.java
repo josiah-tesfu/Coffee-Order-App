@@ -1,12 +1,7 @@
-/*
- *
- */
-
-
 package ui;
 
 import model.Order;
-import model.SpecificDrink;
+import model.Drink;
 
 import java.util.Scanner;
 
@@ -95,7 +90,7 @@ public class OrderApp {
     //MODIFIES: this
     //EFFECTS: Prompts user to choose a drink and adds it to current order
     private void doAddToOrder() {
-        SpecificDrink drink;
+        Drink drink;
 
         System.out.println("SELECT DRINK TO ADD FROM MENU");
         String drinkName = input.nextLine().toLowerCase();
@@ -104,7 +99,7 @@ public class OrderApp {
             drinkName = input.nextLine().toLowerCase();
         }
 
-        drink = new SpecificDrink(drinkName, currentOrder.isToGo());
+        drink = new Drink(drinkName, currentOrder.isToGo());
         currentOrder.addToOrder(drink);
         customizeDrinkSize(drinkName);
         includeAddOn(drinkName);
@@ -153,12 +148,12 @@ public class OrderApp {
     //MODIFIES: this
     //EFFECTS: Prompts user to customize drink size for drink in current order
     private void customizeDrinkSize(String drinkName) {
-        String drinkSize = "";
-        if (!(drinkName.equals("Macchiato") || drinkName.equals("Espresso"))) {
+        String drinkSize;
+        if (!(drinkName.equals("macchiato") || drinkName.equals("espresso"))) {
             System.out.printf("SELECT DRINK SIZE ( %-10s%-10s%-6s)%n", "Small", "Medium", "Large");
             drinkSize = input.nextLine();
         } else {
-            System.out.println("DEFAULT SIZE OF DEMITASSE CUP");
+            drinkSize = "3 oz demitasse cup";
         }
         currentOrder.getDrink(drinkName).setDrinkSize(drinkSize);
     }
@@ -232,7 +227,7 @@ public class OrderApp {
     }
 
     //EFFECTS: Displays info for drink in current order
-    private void displayDrinkInfo(SpecificDrink drink) {
+    private void displayDrinkInfo(Drink drink) {
         System.out.println("Drink: " + " " + drink.getDrinkName());
         System.out.println("   Cup type: " + drink.getCupType());
         System.out.println("   Drink Size: " + drink.getDrinkSize());
@@ -242,7 +237,7 @@ public class OrderApp {
             String addOnName = drink.getAddOn(i).getAddOnName();
             int addOnNum = drink.getAddOn(i).getAddOnNum();
             if (addOnNum != 0) {
-                System.out.println("Add-on: " + addOnName + " x" + addOnNum);
+                System.out.println("   Add-on: " + addOnName + " x" + addOnNum);
             }
         }
     }

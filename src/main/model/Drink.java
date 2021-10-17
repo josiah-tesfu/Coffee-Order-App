@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 // Represents a drink
-public class SpecificDrink implements Cloneable {
+public class Drink implements Cloneable {
 
     //fields
     String drinkName;
@@ -17,7 +17,7 @@ public class SpecificDrink implements Cloneable {
 
     //EFFECTS: Creates a new medium drink with 0 price and cup type set
     // based on whether the drink is to-go
-    public SpecificDrink(String drinkName, boolean toGo) {
+    public Drink(String drinkName, boolean toGo) {
         this.drinkName = drinkName;
         this.drinkSize = "medium";
         this.toGo = toGo;
@@ -79,10 +79,10 @@ public class SpecificDrink implements Cloneable {
     public void setCupType(boolean toGo) {
         if (toGo) {
             this.cupType = "Paper cup";
-            if (this.drinkName.equals("Macchiato") || this.drinkName.equals("Espresso")) {
+            if (this.drinkName.equals("macchiato") || this.drinkName.equals("espresso")) {
                 this.drinkSize = "small";
             }
-        } else if (this.drinkName.equals("Macchiato") || this.drinkName.equals("Espresso")) {
+        } else if (this.drinkName.equals("macchiato") || this.drinkName.equals("espresso")) {
             this.cupType = "Demitasse cup";
             this.drinkSize = "Demitasse cup";
         } else {
@@ -115,20 +115,25 @@ public class SpecificDrink implements Cloneable {
         return addOns.get(i);
     }
 
+    //REQUIRES: addOnName equals an addOnName String initialized in initAddOns()
     //MODIFIES: addOns, this
     //EFFECTS: Increments the add-on number of an add-on object by add-on name
     // and increases the drink price by 1 if the add-on is an espresso
-    public void addOn(String addOn) {
-        addOn = addOn.toLowerCase();
-        getAddOn(addOn).incrementNum();
+    public void addOn(String addOnName) {
+        addOnName = addOnName.toLowerCase();
+        getAddOn(addOnName).incrementNum();
 
-        if (addOn.equals("espresso shot")) {
+        if (addOnName.equals("espresso shot")) {
             drinkPrice += 1;
         }
     }
 
     public void setDrinkSize(String drinkSize) {
         this.drinkSize = drinkSize;
+    }
+
+    public void setDrinkName(String drinkName) {
+        this.drinkName = drinkName;
     }
 
     public String getDrinkName() {

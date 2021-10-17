@@ -17,7 +17,7 @@ public class Order {
     double tax;
     double subtotal;
     int numberOfItems;
-    List<SpecificDrink> currentOrder;
+    List<Drink> currentOrder;
 
     //EFFECTS: initializes a list of drinks
     public Order() {
@@ -26,7 +26,7 @@ public class Order {
 
     //MODIFIES: this, numberOfItems
     //EFFECTS: Adds a drink to the list of drink objects
-    public void addToOrder(SpecificDrink drink) {
+    public void addToOrder(Drink drink) {
         currentOrder.add(drink);
         numberOfItems++;
         drink.initAddOns();
@@ -35,7 +35,7 @@ public class Order {
     //MODIFIES: this, drinkPrice, total, tax, subtotal
     //EFFECTS: Sets the drink price of a drink object and updates the total,
     // tax, and subtotal
-    public void addPriceToDrink(SpecificDrink drink) {
+    public void addPriceToDrink(Drink drink) {
         drink.setPrice(drink.getDrinkName());
         total += drink.getDrinkPrice();
         tax = (0.05 * total);
@@ -47,7 +47,7 @@ public class Order {
     // Returns true if the drink was copied, false otherwise
     public boolean incrementDrink(String drinkName) throws CloneNotSupportedException {
         if (currentOrder.contains(getDrink(drinkName))) {
-            SpecificDrink drinkCopy = (SpecificDrink) getDrink(drinkName).clone();
+            Drink drinkCopy = (Drink) getDrink(drinkName).clone();
             addToOrder(drinkCopy);
             return true;
         } else {
@@ -61,9 +61,9 @@ public class Order {
     public boolean removeFromOrder(String drinkName) {
         if (currentOrder.contains(getDrink(drinkName))) {
             total -= getDrink(drinkName).getDrinkPrice();
-            tax = (1.05 * total);
-            subtotal = total + tax;
-            numberOfItems++;
+            tax = (0.05 * total);
+            subtotal = (double)Math.round((total + tax) * 100d) / 100d;
+            numberOfItems--;
 
             currentOrder.remove(getDrink(drinkName));
             return true;
@@ -74,7 +74,7 @@ public class Order {
 
     //EFFECTS: Returns true if a specified drink is in the order, and false otherwise
     public boolean checkIfInOrder(String drinkName) {
-        for (SpecificDrink item: currentOrder) {
+        for (Drink item: currentOrder) {
             if (item.getDrinkName().equals(drinkName)) {
                 return true;
             }
@@ -83,8 +83,8 @@ public class Order {
     }
 
     //EFFECTS: Returns drink by name if it is in the order, returns null otherwise
-    public SpecificDrink getDrink(String drinkName) {
-        for (SpecificDrink item: currentOrder) {
+    public Drink getDrink(String drinkName) {
+        for (Drink item: currentOrder) {
             if (item.getDrinkName().equals(drinkName)) {
                 return item;
             }
@@ -92,8 +92,9 @@ public class Order {
         return null;
     }
 
+    //REQUIRES: i < currentOrder length
     //EFFECTS: Returns the drink at index i
-    public SpecificDrink getDrink(int i) {
+    public Drink getDrink(int i) {
         return currentOrder.get(i);
     }
 

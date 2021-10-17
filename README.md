@@ -26,3 +26,6 @@ for larger cafés like Starbucks or Tim Hortons.
 - As a user, I want to be able to include add-ons to an item in my order,
   say sugar or an espresso shot
 - As a user, I want to be able to modify existing items in my order
+- As a user, I want to be able to view the drink menu
+- As a user, I want to be able to increment a drink in my order
+- As a user, I want to be able to view a specific drink in my order
