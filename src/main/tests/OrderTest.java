@@ -1,5 +1,8 @@
-package model;
+package tests;
 
+import model.Drink;
+import model.Order;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,23 +21,23 @@ class OrderTest {
     @Test
     void testAddToOrder() {
         testCurrentOrder.addToOrder(testDrink);
-        assertEquals(1, testCurrentOrder.getNumberOfItems());
-        assertNotNull(testDrink.getAddOn(0));
+        Assertions.assertEquals(1, testCurrentOrder.getNumberOfItems());
+        Assertions.assertNotNull(testDrink.getAddOn(0));
     }
 
     @Test
     void testAddPriceToDrink() {
         testCurrentOrder.addPriceToDrink(testDrink);
-        assertEquals(4.5, testCurrentOrder.getTotal());
-        assertEquals(0.23, testCurrentOrder.getTax());
-        assertEquals(4.72, testCurrentOrder.getSubtotal());
+        Assertions.assertEquals(4.5, testCurrentOrder.getTotal());
+        Assertions.assertEquals(0.23, testCurrentOrder.getTax());
+        Assertions.assertEquals(4.72, testCurrentOrder.getSubtotal());
     }
 
     @Test
     void testIncrementDrink() throws CloneNotSupportedException {
         testCurrentOrder.addToOrder(testDrink);
         testCurrentOrder.incrementDrink("latte");
-        assertEquals(2, testCurrentOrder.getNumberOfItems());
+        Assertions.assertEquals(2, testCurrentOrder.getNumberOfItems());
     }
 
     @Test
@@ -43,11 +46,11 @@ class OrderTest {
         testCurrentOrder.addPriceToDrink(testDrink);
         testCurrentOrder.addToOrder(testDrink);
         testCurrentOrder.addPriceToDrink(testDrink);
-        assertTrue(testCurrentOrder.removeFromOrder("latte"));
-        assertEquals(4.5, testCurrentOrder.getTotal());
-        assertEquals(0.23, testCurrentOrder.getTax());
-        assertEquals(4.72, testCurrentOrder.getSubtotal());
-        assertEquals(1, testCurrentOrder.getNumberOfItems());
+        Assertions.assertTrue(testCurrentOrder.removeFromOrder("latte"));
+        Assertions.assertEquals(4.5, testCurrentOrder.getTotal());
+        Assertions.assertEquals(0.23, testCurrentOrder.getTax());
+        Assertions.assertEquals(4.72, testCurrentOrder.getSubtotal());
+        Assertions.assertEquals(1, testCurrentOrder.getNumberOfItems());
     }
 
     @Test
@@ -56,41 +59,40 @@ class OrderTest {
         testCurrentOrder.addPriceToDrink(testDrink);
         testCurrentOrder.addToOrder(testDrink);
         testCurrentOrder.addPriceToDrink(testDrink);
-        assertFalse(testCurrentOrder.removeFromOrder("espresso"));
-        assertEquals(9.0, testCurrentOrder.getTotal());
-        assertEquals(0.45, testCurrentOrder.getTax());
-        assertEquals(9.45, testCurrentOrder.getSubtotal());
-        assertEquals(2, testCurrentOrder.getNumberOfItems());
+        Assertions.assertFalse(testCurrentOrder.removeFromOrder("espresso"));
+        Assertions.assertEquals(9.0, testCurrentOrder.getTotal());
+        Assertions.assertEquals(0.45, testCurrentOrder.getTax());
+        Assertions.assertEquals(9.45, testCurrentOrder.getSubtotal());
+        Assertions.assertEquals(2, testCurrentOrder.getNumberOfItems());
     }
 
     @Test
     void testCheckIfInOrderTrue() {
         testCurrentOrder.addToOrder(testDrink);
-        assertTrue(testCurrentOrder.checkIfInOrder("latte"));
+        Assertions.assertTrue(testCurrentOrder.checkIfInOrder("latte"));
     }
 
     @Test
     void testCheckIfInOrderFalse() {
         testCurrentOrder.addToOrder(testDrink);
-        assertFalse(testCurrentOrder.checkIfInOrder("espresso"));
+        Assertions.assertFalse(testCurrentOrder.checkIfInOrder("espresso"));
     }
 
     @Test
     void testGetDrinkNotNull() {
         testCurrentOrder.addToOrder(testDrink);
-        assertNotNull(testCurrentOrder.getDrink("latte"));
+        Assertions.assertNotNull(testCurrentOrder.getDrink("latte"));
     }
 
     @Test
     void testGetDrinkNull() {
         testCurrentOrder.addToOrder(testDrink);
-        assertNull(testCurrentOrder.getDrink("espresso"));
+        Assertions.assertNull(testCurrentOrder.getDrink("espresso"));
     }
-
 
     @Test
     void testGetDrinkIndex() {
         testCurrentOrder.addToOrder(testDrink);
-        assertNotNull(testCurrentOrder.getDrink(0));
+        Assertions.assertNotNull(testCurrentOrder.getDrink(0));
     }
 }
