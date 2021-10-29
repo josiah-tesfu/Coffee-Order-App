@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class OrderApp {
     private Scanner input;
     private Order currentOrder;
+    boolean toGo;
 
     //EFFECTS: Runs the coffee order application
     public OrderApp() throws CloneNotSupportedException {
@@ -22,8 +23,8 @@ public class OrderApp {
         input = new Scanner(System.in);
         boolean orderInProgress = true;
         String command;
-        currentOrder = new Order();
         customizeToGo();
+        currentOrder = new Order(toGo);
         commandOptions();
 
         while (orderInProgress) {
@@ -183,14 +184,12 @@ public class OrderApp {
     //MODIFIES: this
     //EFFECTS: Prompts user to customize to-go status for order
     private void customizeToGo() {
-        boolean toGo = false;
         String hereOrGo;
         System.out.println("(FOR HERE) OR (TO GO)?");
         hereOrGo = input.nextLine().toLowerCase();
         if (hereOrGo.equals("to go")) {
             toGo = true;
         }
-        currentOrder.setToGo(toGo);
     }
 
     //MODIFIES: this

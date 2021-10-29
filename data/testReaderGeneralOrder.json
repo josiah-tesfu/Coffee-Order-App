@@ -1,0 +1,23 @@
+{
+    "currentOrder": [
+      {
+          "drinkName": "americano",
+          "ToGo": true,
+          "drinkSize": "small",
+          "drinkPrice": 3.1,
+          "cupType": "paper cup"
+      },
+      {
+          "drinkName": "drip coffee",
+          "ToGo": true,
+          "drinkSize": "medium",
+          "drinkPrice": 2.4,
+          "cupType": "paper cup"
+      }
+
+    ],
+    "toGo": true,
+    "total": 5.5,
+    "tax": 0.275,
+    "subtotal": 5.78
+}

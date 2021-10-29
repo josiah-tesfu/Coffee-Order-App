@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 // Represents a drink
 public class Drink implements Cloneable {
@@ -11,9 +9,11 @@ public class Drink implements Cloneable {
     String drinkName;
     Double drinkPrice;
     String cupType;
+
     boolean toGo;
     String drinkSize;
-    List<AddOn> addOns = new ArrayList<>();
+    List<AddOn> addOns;
+    HashMap<String, Double> menu;
 
     //EFFECTS: Creates a new medium drink with 0 price and cup type set
     // based on whether the drink is to-go
@@ -22,34 +22,27 @@ public class Drink implements Cloneable {
         this.drinkSize = "medium";
         this.toGo = toGo;
         this.drinkPrice = 0.0;
+        addOns = new ArrayList<>();
+        menu = new HashMap<>();
+        initMenu();
         setCupType(this.toGo);
     }
 
-    //MODIFIES: drinkPrice, this
-    //EFFECTS: Sets the drink price using the name of the drink and the
-    // priceCalculate method
+    //MODIFIES: this
+    //EFFECTS: initializes a hashmap for the drinks menu
+    public void initMenu() {
+        menu.put("drip coffee", 2.2);
+        menu.put("americano", 3.1);
+        menu.put("espresso", 1.8);
+        menu.put("macchiato", 3.5);
+        menu.put("cappuccino", 4.2);
+        menu.put("latte", 4.1);
+    }
+
+    //modifies: this
+    //EFFECTS: sets the drink price to the calculated drink price based on the based price
     public void setPrice(String drinkName) {
-        drinkName = drinkName.toLowerCase();
-        switch (drinkName) {
-            case "drip coffee":
-                this.drinkPrice = priceCalculate(2.2);
-                break;
-            case "americano":
-                this.drinkPrice = priceCalculate(3.1);
-                break;
-            case "espresso":
-                this.drinkPrice = 1.8;
-                break;
-            case "macchiato":
-                this.drinkPrice = 3.5;
-                break;
-            case "cappuccino":
-                this.drinkPrice = priceCalculate(4.2);
-                break;
-            case "latte":
-                this.drinkPrice = priceCalculate(4.1);
-                break;
-        }
+        this.drinkPrice = priceCalculate(menu.get(drinkName));
     }
 
     //EFFECTS: Returns the drink price as a function of drink size and to-go
@@ -150,6 +143,11 @@ public class Drink implements Cloneable {
 
     public String getDrinkSize() {
         return drinkSize;
+    }
+
+
+    public boolean isToGo() {
+        return toGo;
     }
 
     public Object clone() throws CloneNotSupportedException {

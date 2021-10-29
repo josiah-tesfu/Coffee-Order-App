@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Represents an order
@@ -16,15 +17,17 @@ public class Order {
     double total;
     double tax;
     double subtotal;
+
     int numberOfItems;
     List<Drink> currentOrder;
 
     //EFFECTS: initializes a list of drinks
-    public Order() {
+    public Order(boolean toGo) {
+        this.toGo = toGo;
         currentOrder = new ArrayList<>();
     }
 
-    //MODIFIES: this, numberOfItems
+    //MODIFIES: this
     //EFFECTS: Adds a drink to the list of drink objects
     public void addToOrder(Drink drink) {
         currentOrder.add(drink);
@@ -32,7 +35,7 @@ public class Order {
         drink.initAddOns();
     }
 
-    //MODIFIES: this, drinkPrice, total, tax, subtotal
+    //MODIFIES: this, drinkPrice
     //EFFECTS: Sets the drink price of a drink object and updates the total,
     // tax, and subtotal
     public void addPriceToDrink(Drink drink) {
@@ -55,7 +58,7 @@ public class Order {
         }
     }
 
-    //MODIFIES: this, total, tax, subtotal, numberOfItems
+    //MODIFIES: this
     //EFFECTS: Removes a drink from the order. Returns true if the
     // drink was removed and false otherwise.
     public boolean removeFromOrder(String drinkName) {
@@ -98,8 +101,9 @@ public class Order {
         return currentOrder.get(i);
     }
 
-    public void setToGo(boolean toGo) {
-        this.toGo = toGo;
+    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+    public List<Drink> getDrinks() {
+        return Collections.unmodifiableList(currentOrder);
     }
 
     public double getTotal() {
@@ -121,4 +125,22 @@ public class Order {
     public boolean isToGo() {
         return toGo;
     }
+
+    public void setToGo(boolean toGo) {
+        this.toGo = toGo;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+
 }

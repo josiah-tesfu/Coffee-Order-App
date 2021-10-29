@@ -11,11 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderTest {
     Order testCurrentOrder;
     Drink testDrink;
+    boolean testToGo;
 
     @BeforeEach
     void setUp() {
-        testCurrentOrder = new Order();
-        testDrink = new Drink("latte", false);
+        testCurrentOrder = new Order(testToGo);
+        testDrink = new Drink("latte", testToGo);
     }
 
     @Test
