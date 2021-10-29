@@ -39,3 +39,5 @@ Phase 2:
   to save my order and have the option to do so or not
 - As a user, when I start the application, I want to be given the option to load
   my order from file
+
+source: The persistence code for this project is based on the JsonSerializationDemo project.
