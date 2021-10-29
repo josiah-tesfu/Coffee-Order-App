@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.*;
 
 // Represents a drink
@@ -152,5 +154,15 @@ public class Drink implements Cloneable {
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("toGo", toGo);
+        json.put("drinkName", drinkName);
+        json.put("drinkPrice", drinkPrice);
+        json.put("cupType", cupType);
+        json.put("cupSize", drinkSize);
+        return json;
     }
 }

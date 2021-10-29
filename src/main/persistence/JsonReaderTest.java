@@ -42,7 +42,7 @@ class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderGeneralOrder.json");
         try {
             Order od = reader.read();
-            assertFalse(od.isToGo());
+            assertTrue(od.isToGo());
             assertEquals(5.5, od.getTotal());
             assertEquals(0.28, od.getTax());
             assertEquals(5.78, od.getSubtotal());

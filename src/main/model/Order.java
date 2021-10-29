@@ -5,6 +5,9 @@
 
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +26,9 @@ public class Order {
 
     //EFFECTS: initializes a list of drinks
     public Order(boolean toGo) {
+        total = 0;
+        tax = 0;
+        subtotal = 0;
         this.toGo = toGo;
         currentOrder = new ArrayList<>();
     }
@@ -142,5 +148,23 @@ public class Order {
         this.subtotal = subtotal;
     }
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("toGo", toGo);
+        json.put("total", total);
+        json.put("tax", tax);
+        json.put("subtotal", subtotal);
+        json.put("currentOrder", currentOrderToJson());
+        return json;
+    }
 
+    // EFFECTS: returns drinks in this order as a JSON array
+    private JSONArray currentOrderToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Drink drink : currentOrder) {
+            jsonArray.put(drink.toJson());
+        }
+        return jsonArray;
+    }
 }
