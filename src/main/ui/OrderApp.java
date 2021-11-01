@@ -2,17 +2,26 @@ package ui;
 
 import model.Order;
 import model.Drink;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Coffee order application
 public class OrderApp {
+    private static final String JSON_STORE = "./data/currentOrder.json";
     private Scanner input;
     private Order currentOrder;
     boolean toGo;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECTS: Runs the coffee order application
     public OrderApp() throws CloneNotSupportedException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runOrder();
     }
 
@@ -51,6 +60,8 @@ public class OrderApp {
         System.out.println("   - INCREMENT ITEM IN ORDER: SELECT (+)");
         System.out.println("   - VIEW ORDER: SELECT (VIEW ORDER)");
         System.out.println("   - COMPLETE ORDER: SELECT (ORDER)");
+        System.out.println("   - SAVE CURRENT ORDER TO FILE (SAVE)");
+        System.out.println("   - LOAD CURRENT ORDER FROM FILE (LOAD)");
     }
 
     //MODIFIES: this
@@ -77,6 +88,12 @@ public class OrderApp {
                 break;
             case "view order":
                 displayOrderInfo();
+                break;
+            case "save":
+                saveOrder();
+                break;
+            case "load":
+                loadOrder();
                 break;
         }
     }
@@ -255,5 +272,28 @@ public class OrderApp {
         System.out.println("total: $" + currentOrder.getTotal());
         System.out.println("Tax: $" + currentOrder.getTax());
         System.out.println("Subtotal: $" + currentOrder.getSubtotal());
+    }
+
+    // EFFECTS: saves the order to file
+    private void saveOrder() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(currentOrder);
+            jsonWriter.close();
+            System.out.println("Saved current order to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads order from file
+    private void loadOrder() {
+        try {
+            currentOrder = jsonReader.read();
+            System.out.println("Loaded current order from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
