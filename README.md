@@ -41,3 +41,7 @@ Phase 2:
   my order from file
 
 source: The persistence code for this project is based on the JsonSerializationDemo project.
+
+source: Icon "coffee_cup.png" made by Freepik from www.flaticon.com
+
+ 

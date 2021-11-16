@@ -20,6 +20,8 @@ public class Order {
     double total;
     double tax;
     double subtotal;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     int numberOfItems;
     List<Drink> currentOrder;

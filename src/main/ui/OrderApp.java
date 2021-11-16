@@ -5,12 +5,13 @@ import model.Drink;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
 // Coffee order application
-public class OrderApp {
+public class OrderApp extends JFrame {
     private static final String JSON_STORE = "./data/currentOrder.json";
     private Scanner input;
     private Order currentOrder;
