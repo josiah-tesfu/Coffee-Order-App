@@ -27,6 +27,9 @@ public class OrderPanel extends JPanel implements ActionListener {
     JButton[] removeBtn;
     static final String JSON_STORE = "./data/currentOrder.json";
     JsonWriter jsonWriter;
+    JLabel total;
+    JLabel tax;
+    JLabel subtotal;
 
     // MODIFIES: this
     // EFFECTS: Constructs a panel to display the order
@@ -101,9 +104,9 @@ public class OrderPanel extends JPanel implements ActionListener {
         backToMenu = addSummaryButton("Back to Menu");
         Component space = Box.createVerticalStrut(600);
         orderSummary.add(space);
-        addSummaryLabel("Total: $" + order.getTotal());
-        addSummaryLabel("Tax: $" + order.getTax());
-        addSummaryLabel("Subtotal: $" + order.getSubtotal());
+        total = addSummaryLabel("Total: $" + order.getTotal());
+        tax = addSummaryLabel("Tax: $" + order.getTax());
+        subtotal = addSummaryLabel("Subtotal: $" + order.getSubtotal());
 
         saveOrder = addSummaryButton("Save Order");
         completeOrder = addSummaryButton("Complete Order");
@@ -119,10 +122,11 @@ public class OrderPanel extends JPanel implements ActionListener {
 
     // MODIFIES: label
     // EFFECTS: Constructs a label and adds it to the order summary panel
-    public void addSummaryLabel(String labelText) {
+    public JLabel addSummaryLabel(String labelText) {
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("sans serif", Font.PLAIN, 50));
         orderSummary.add(label);
+        return label;
     }
 
     // MODIFIES: this, button
@@ -186,6 +190,9 @@ public class OrderPanel extends JPanel implements ActionListener {
             if (obj == removeBtn[i]) {
                 order.removeFromOrder(i);
                 drinkSummary[i].setVisible(false);
+                total.setText("Total: $" + order.getTotal());
+                tax.setText("Tax: $" + order.getTax());
+                subtotal.setText("Subtotal: $" + order.getSubtotal());
             }
         }
     }
