@@ -83,6 +83,16 @@ public class Order {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Removes a drink from the order at a specified index.
+    public void removeFromOrder(int index) {
+        total -= getDrink(index).getDrinkPrice();
+        tax = (0.05 * total);
+        subtotal = (double)Math.round((total + tax) * 100d) / 100d;
+        numberOfItems--;
+        currentOrder.remove(index);
+    }
+
     //EFFECTS: Returns true if a specified drink is in the order, and false otherwise
     public boolean checkIfInOrder(String drinkName) {
         for (Drink item: currentOrder) {
@@ -112,6 +122,10 @@ public class Order {
     // EFFECTS: returns an unmodifiable list of thingies in this workroom
     public List<Drink> getDrinks() {
         return Collections.unmodifiableList(currentOrder);
+    }
+
+    public int size() {
+        return currentOrder.size();
     }
 
     public double getTotal() {

@@ -1,7 +1,7 @@
 package ui;
 
 public class Main {
-    public static void main(String[] args) throws CloneNotSupportedException {
-        new JFrameClass();
+    public static void main(String[] args) {
+        new OrderAppGui();
     }
 }

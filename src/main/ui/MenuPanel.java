@@ -7,34 +7,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
-
-In this class:
-
- - create JPanel for drinks menu
-
- JPanel contains components:
-  - label for panel
-  - buttons for each of the drinks
-    - each button opens DrinkPanel for that drink
-  - button for view order
-    - opens OrderPanel
-
-- components layout: GridBagLayout
-
-
- */
-
 public class MenuPanel extends JPanel implements ActionListener {
-
+    DrinkPanel drinkPanel;
+    OrderPanel orderPanel;
+    OrderAppGui orderAppGui;
     Order order;
-    JButton drinkButton;
+    JButton[] drinkButtons;
     JButton orderButton;
     JLabel label;
     GridBagConstraints constraints;
 
-    public MenuPanel(Order order) {
+    //MODIFIES: this
+    //EFFECTS: Constructs a panel that displays the menu
+    public MenuPanel(Order order, OrderAppGui orderAppGui) {
+        this.orderAppGui = orderAppGui;
         this.order = order;
+        drinkButtons = new JButton[6];
         setPreferredSize(new Dimension(Order.WIDTH, Order.HEIGHT));
 
         this.setLayout(new GridBagLayout());
@@ -43,6 +31,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         addDrinkComponents(constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the constraints for the menu panel layout
     private void specifyConstraints(double weightX, double weightY, int gridX, int gridY) {
         constraints.ipadx = 100;
         constraints.ipady = 100;
@@ -52,43 +42,49 @@ public class MenuPanel extends JPanel implements ActionListener {
         constraints.gridy = gridY;
     }
 
-    public void drinkButton(String name) {
+    // EFFECTS: Returns a JButton for the menu panel
+    public JButton drinkButton(String name) {
+        JButton button;
         Icon icon = new ImageIcon("./data/coffee_cup.png");
-        drinkButton = new JButton(name, icon);
+        button = new JButton(name, icon);
 
-        drinkButton.setVerticalTextPosition(AbstractButton.TOP);
-        drinkButton.setHorizontalTextPosition(AbstractButton.CENTER);
-        drinkButton.setFont(new Font("sans serif", Font.PLAIN, 30));
-        drinkButton.addActionListener(this);
-
+        button.setVerticalTextPosition(AbstractButton.TOP);
+        button.setHorizontalTextPosition(AbstractButton.CENTER);
+        button.setFont(new Font("sans serif", Font.PLAIN, 30));
+        button.addActionListener(this);
+        return button;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Adds the drink buttons to the menu panel
     private void addDrinkComponents(GridBagConstraints c) {
-        drinkButton("Drip Coffee");
+        drinkButtons[0] = drinkButton("Drip Coffee");
         specifyConstraints(0.5, 0.5, 0, 1);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[0], c);
 
-        drinkButton("Americano");
+        drinkButtons[1] = drinkButton("Americano");
         specifyConstraints(0.5, 0.5, 1, 1);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[1], c);
 
-        drinkButton("Latte");
+        drinkButtons[2] = drinkButton("Latte");
         specifyConstraints(0.5, 0.5, 2, 1);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[2], c);
 
-        drinkButton("Cappuccino");
+        drinkButtons[3] = drinkButton("Cappuccino");
         specifyConstraints(0.5, 0.5, 0, 2);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[3], c);
 
-        drinkButton("Espresso");
+        drinkButtons[4] = drinkButton("Espresso");
         specifyConstraints(0.5, 0.5, 1, 2);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[4], c);
 
-        drinkButton("Macchiato");
+        drinkButtons[5] = drinkButton("Macchiato");
         specifyConstraints(0.5, 0.5, 2, 2);
-        this.add(drinkButton, c);
+        this.add(drinkButtons[5], c);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Adds the components at the top of the panel
     private void addTopComponents(GridBagConstraints c) {
         label = new JLabel("Select drink");
         label.setFont(new Font("sans serif", Font.PLAIN, 80));
@@ -104,11 +100,28 @@ public class MenuPanel extends JPanel implements ActionListener {
         orderButton.addActionListener(this);
     }
 
-
+    // MODIFIES: this, e
+    // EFFECTS: Performs actions on buttons in the menu panel
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-        this.setVisible(obj == orderButton);
+
+        if (obj == orderButton) {
+            this.setVisible(false);
+            orderPanel = new OrderPanel(order, orderAppGui, this);
+            orderAppGui.add(orderPanel);
+            orderPanel.setVisible(true);
+
+        } else {
+            for (JButton drinkButton : drinkButtons) {
+                if (obj == drinkButton) {
+                    drinkPanel = new DrinkPanel(order, orderAppGui, this, drinkButton.getText());
+                    this.setVisible(false);
+                    orderAppGui.add(drinkPanel);
+                    drinkPanel.setVisible(true);
+                }
+            }
+        }
 
     }
 }
