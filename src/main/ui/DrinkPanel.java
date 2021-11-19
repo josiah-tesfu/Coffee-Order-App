@@ -162,8 +162,8 @@ public class DrinkPanel extends JPanel implements ActionListener {
     // EFFECTS: Performs actions on add-on buttons
     private void addOnBtnAction(Object obj) {
         addOnAction(obj, "milk", "milk", 0);
-        addOnAction(obj, "cream", "cream", 1);
-        addOnAction(obj, "sugar", "sugar", 2);
+        addOnAction(obj, "sugar", "sugar", 1);
+        addOnAction(obj, "cream", "cream",  2);
         addOnAction(obj, "esp. shot", "espresso shot", 3);
     }
 
