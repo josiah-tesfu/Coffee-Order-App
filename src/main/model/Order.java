@@ -50,7 +50,7 @@ public class Order {
         drink.setPrice(drink.getDrinkName());
         total += drink.getDrinkPrice();
         tax = (0.05 * total);
-        subtotal = (double)Math.round((total + tax) * 100d) / 100d;
+        subtotal = total + tax;
     }
 
     //MODIFIES: this
@@ -73,7 +73,7 @@ public class Order {
         if (currentOrder.contains(getDrink(drinkName))) {
             total -= getDrink(drinkName).getDrinkPrice();
             tax = (0.05 * total);
-            subtotal = (double)Math.round((total + tax) * 100d) / 100d;
+            subtotal = total + tax;
             numberOfItems--;
 
             currentOrder.remove(getDrink(drinkName));
@@ -88,7 +88,7 @@ public class Order {
     public void removeFromOrder(int index) {
         total -= getDrink(index).getDrinkPrice();
         tax = (0.05 * total);
-        subtotal = (double)Math.round((total + tax) * 100d) / 100d;
+        subtotal = total + tax;
         numberOfItems--;
         currentOrder.remove(index);
     }
@@ -129,7 +129,7 @@ public class Order {
     }
 
     public double getTotal() {
-        return total;
+        return (double)Math.round(total * 100d) / 100d;
     }
 
     public double getTax() {
@@ -137,7 +137,7 @@ public class Order {
     }
 
     public double getSubtotal() {
-        return subtotal;
+        return (double)Math.round(subtotal * 100d) / 100d;
     }
 
     public int getNumberOfItems() {

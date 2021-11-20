@@ -30,6 +30,7 @@ public class OrderPanel extends JPanel implements ActionListener {
     JLabel total;
     JLabel tax;
     JLabel subtotal;
+    int orderSize;
 
     // MODIFIES: this
     // EFFECTS: Constructs a panel to display the order
@@ -38,6 +39,7 @@ public class OrderPanel extends JPanel implements ActionListener {
         this.orderAppGui = orderAppGui;
         this.menuPanel = menuPanel;
         this.order = order;
+        orderSize = order.size();
         removeBtn = new JButton[order.size()];
         setPreferredSize(new Dimension(Order.WIDTH, Order.HEIGHT));
         setLayout(new GridLayout(1, 2));
@@ -145,11 +147,10 @@ public class OrderPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-        int orderSize = order.size();
 
         if (obj instanceof JButton) {
             if (Arrays.asList(removeBtn).contains(obj)) {
-                removeBtnAction(obj, orderSize);
+                removeBtnAction(obj);
 
             } else if (obj == saveOrder) {
                 saveOrderAction();
@@ -185,17 +186,51 @@ public class OrderPanel extends JPanel implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: Removes a specified drink from the order
-    private void removeBtnAction(Object obj, int orderSize) {
-        for (int i = 0; i < orderSize; i++) {
-            if (obj == removeBtn[i]) {
-                order.removeFromOrder(i);
-                drinkSummary[i].setVisible(false);
+    private void removeBtnAction(Object obj) {
+        for (JButton button : removeBtn) {
+            if (obj == button) {
+                int index = Arrays.asList(removeBtn).indexOf(button);
+                order.removeFromOrder(index);
+                drinkSummary[index].setVisible(false);
                 total.setText("Total: $" + order.getTotal());
                 tax.setText("Tax: $" + order.getTax());
                 subtotal.setText("Subtotal: $" + order.getSubtotal());
+                removeBtn = removeButtonItem(index);
+                drinkSummary = removePanelItem(index);
             }
         }
     }
+
+    // MODIFIES: removeBtn, removeBtnCopy
+    // EFFECTS: Returns a copy of the removeBtn array with a specified element removed
+    public JButton[] removeButtonItem(int index) {
+        JButton[] removeBtnCopy = new JButton[removeBtn.length - 1];
+
+        for (int i = 0, k = 0; i < removeBtn.length; i++) {
+
+            if (i == index) {
+                continue;
+            }
+            removeBtnCopy[k++] = removeBtn[i];
+        }
+        return removeBtnCopy;
+    }
+
+    // MODIFIES: drinkSummary, drinkSummaryCopy
+    // EFFECTS: Returns a copy of the drinkSummary array with a specified element removed
+    public JPanel[] removePanelItem(int index) {
+        JPanel[] drinkSummaryCopy = new JPanel[drinkSummary.length - 1];
+
+        for (int i = 0, k = 0; i < drinkSummary.length; i++) {
+
+            if (i == index) {
+                continue;
+            }
+            drinkSummaryCopy[k++] = drinkSummary[i];
+        }
+        return drinkSummaryCopy;
+    }
+
 
     private void completeOrderAction(Object obj) {
         orderAppGui.dispose();
