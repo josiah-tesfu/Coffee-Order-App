@@ -11,19 +11,23 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads JSON representation of order from file
 public class JsonReader {
     private String source;
 
+    // EFFECTS: Constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
+    // EFFECTS: Reads JSON representation of order from file
     public Order read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseOrder(jsonObject);
     }
 
+    // Creates stream from source file and reads it into a String
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -34,6 +38,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // Parses order from JSON Object
     private Order parseOrder(JSONObject jsonObject) {
         boolean toGo = jsonObject.getBoolean("toGo");
         double total = jsonObject.getDouble("total");
@@ -47,6 +52,7 @@ public class JsonReader {
         return od;
     }
 
+    // Adds adds JSON Object to order
     private void addToOrder(Order od, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("currentOrder");
         for (Object json : jsonArray) {
@@ -55,6 +61,7 @@ public class JsonReader {
         }
     }
 
+    // Adds drink from JSON Object to order
     private void addDrink(Order od, JSONObject jsonObject) {
         String drinkName = jsonObject.getString("drinkName");
         boolean toGo = jsonObject.has("toGo");

@@ -9,15 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// Represents a frame which houses the panels and contains the starter panel
 public class OrderAppGui extends JFrame implements ActionListener {
 
-    static final String JSON_STORE = "./data/currentOrder.json";
-    JsonReader jsonReader;
-    Order order;
-    JPanel starterPanel;
-    JPanel menuPanel;
-    JButton loadOrder;
-    JButton newOrder;
+    private static final String JSON_STORE = "./data/currentOrder.json";
+    private final JsonReader jsonReader;
+    private Order order;
+    private final JPanel starterPanel;
+    private final JButton loadOrder;
 
     //MODIFIES: this
     //EFFECTS: Constructs a frame to house the panels
@@ -32,7 +31,7 @@ public class OrderAppGui extends JFrame implements ActionListener {
         starterPanel.setPreferredSize(new Dimension(Order.WIDTH, Order.HEIGHT));
 
         loadOrder = new JButton("LOAD ORDER");
-        newOrder = new JButton("NEW ORDER");
+        JButton newOrder = new JButton("NEW ORDER");
         loadOrder.setFont(new Font("sans serif", Font.PLAIN, 100));
         newOrder.setFont(new Font("sans serif", Font.PLAIN, 100));
         starterPanel.add(loadOrder);
@@ -50,13 +49,14 @@ public class OrderAppGui extends JFrame implements ActionListener {
         if (obj == loadOrder) {
             try {
                 order = jsonReader.read();
+                order.setEvent("Order loaded from file " + JSON_STORE);
             } catch (IOException ex) {
                 loadOrder.setText("Unable to load order...");
             }
 
         }
         starterPanel.setVisible(false);
-        menuPanel = new MenuPanel(order, this);
+        JPanel menuPanel = new MenuPanel(order, this);
         add(menuPanel);
         menuPanel.setVisible(true);
     }

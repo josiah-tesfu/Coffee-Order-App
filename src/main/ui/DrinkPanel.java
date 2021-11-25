@@ -9,22 +9,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+// Represents a panel which displays drink which can be customized and added to the order
 public class DrinkPanel extends JPanel implements ActionListener {
 
-    Order order;
-    Drink drink;
-    MenuPanel menuPanel;
-    OrderPanel orderPanel;
-    OrderAppGui orderAppGui;
-    GridBagConstraints constraints;
-    JButton backToMenuBtn;
-    JButton viewOrderBtn;
-    JButton sizeBtn;
-    JButton addToOrderBtn;
-    JLabel drinkPanelLbl;
-    String drinkName;
-    JButton[] addOnBtn;
-    int[] addOnCount;
+    private final Order order;
+    private final Drink drink;
+    private final MenuPanel menuPanel;
+    private final OrderAppGui orderAppGui;
+    private final GridBagConstraints constraints;
+    private JButton backToMenuBtn;
+    private JButton viewOrderBtn;
+    private JButton sizeBtn;
+    private JButton addToOrderBtn;
+    private final String drinkName;
+    private final JButton[] addOnBtn;
+    private final int[] addOnCount;
 
     // MODIFIES: this
     // EFFECTS: Constructs a panel fora specific drink in the order
@@ -57,7 +56,7 @@ public class DrinkPanel extends JPanel implements ActionListener {
         addOnBtn[3] = addOnButton("esp. shot", 1, 4, 60, 30);
         addToOrderBtn = addOnButton("add to order", 0, 5, 100, 30);
 
-        drinkPanelLbl = new JLabel(drinkName);
+        JLabel drinkPanelLbl = new JLabel(drinkName);
         specifyConstraints(0, 1, 200, 200);
         this.add(drinkPanelLbl, constraints);
         drinkPanelLbl.setFont(new Font("sans serif", Font.PLAIN, 50));
@@ -121,6 +120,7 @@ public class DrinkPanel extends JPanel implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Closes this and opens the order panel
     private void viewOrderBtnAction() {
+        OrderPanel orderPanel;
         this.setVisible(false);
         orderPanel = new OrderPanel(order, orderAppGui, menuPanel);
         orderAppGui.add(orderPanel);
@@ -136,6 +136,7 @@ public class DrinkPanel extends JPanel implements ActionListener {
         }
         order.addPriceToDrink(drink);
         addToOrderBtn.setText(drinkName + " added to order");
+        order.setEvent(drink.getDrinkName() + " has been added to the order");
     }
 
     // MODIFIES: this

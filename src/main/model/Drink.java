@@ -8,14 +8,14 @@ import java.util.*;
 public class Drink implements Cloneable {
 
     //fields
-    String drinkName;
-    Double drinkPrice;
-    String cupType;
+    private String drinkName;
+    private Double drinkPrice;
+    private String cupType;
 
-    boolean toGo;
-    String drinkSize;
-    List<AddOn> addOns;
-    HashMap<String, Double> menu;
+    private final boolean toGo;
+    private String drinkSize;
+    private final List<AddOn> addOns;
+    private final HashMap<String, Double> menu;
 
     //EFFECTS: Creates a new medium drink with 0 price and cup type set
     // based on whether the drink is to-go

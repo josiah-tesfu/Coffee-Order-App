@@ -10,21 +10,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 // Represents an order
 public class Order {
 
-    //fields
-    boolean toGo;
-    double total;
-    double tax;
-    double subtotal;
+    private final boolean toGo;
+    private double total;
+    private double tax;
+    private double subtotal;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-
-    int numberOfItems;
-    List<Drink> currentOrder;
+    private int numberOfItems;
+    private final List<Drink> currentOrder;
+    private final EventLog eventLog;
 
     //EFFECTS: initializes a list of drinks
     public Order(boolean toGo) {
@@ -33,6 +33,7 @@ public class Order {
         subtotal = 0;
         this.toGo = toGo;
         currentOrder = new ArrayList<>();
+        eventLog = EventLog.getInstance();
     }
 
     //MODIFIES: this
@@ -56,15 +57,15 @@ public class Order {
     //MODIFIES: this
     //EFFECTS: Creates a copy of a drink in the order and adds it to the order.
     // Returns true if the drink was copied, false otherwise
-    public boolean incrementDrink(String drinkName) throws CloneNotSupportedException {
-        if (currentOrder.contains(getDrink(drinkName))) {
-            Drink drinkCopy = (Drink) getDrink(drinkName).clone();
-            addToOrder(drinkCopy);
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean incrementDrink(String drinkName) throws CloneNotSupportedException {
+//        if (currentOrder.contains(getDrink(drinkName))) {
+//            Drink drinkCopy = (Drink) getDrink(drinkName).clone();
+//            addToOrder(drinkCopy);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     //MODIFIES: this
     //EFFECTS: Removes a drink from the order. Returns true if the
@@ -148,8 +149,8 @@ public class Order {
         return toGo;
     }
 
-    public void setToGo(boolean toGo) {
-        this.toGo = toGo;
+    public EventLog getEventLog() {
+        return eventLog;
     }
 
     public void setTotal(double total) {
@@ -164,6 +165,14 @@ public class Order {
         this.subtotal = subtotal;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Logs a new event
+    public void setEvent(String description) {
+        Event event = new Event(description);
+        eventLog.logEvent(event);
+    }
+
+    // Returns a JSON Object with order attributes
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("toGo", toGo);

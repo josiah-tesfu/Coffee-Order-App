@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class OrderTest {
     Order testCurrentOrder;
     Drink testDrink;
@@ -34,12 +32,12 @@ class OrderTest {
         Assertions.assertEquals(4.72, testCurrentOrder.getSubtotal());
     }
 
-    @Test
-    void testIncrementDrink() throws CloneNotSupportedException {
-        testCurrentOrder.addToOrder(testDrink);
-        testCurrentOrder.incrementDrink("latte");
-        Assertions.assertEquals(2, testCurrentOrder.getNumberOfItems());
-    }
+//    @Test
+//    void testIncrementDrink() throws CloneNotSupportedException {
+//        testCurrentOrder.addToOrder(testDrink);
+//        testCurrentOrder.incrementDrink("latte");
+//        Assertions.assertEquals(2, testCurrentOrder.getNumberOfItems());
+//    }
 
     @Test
     void testRemoveFromOrderTrue() {

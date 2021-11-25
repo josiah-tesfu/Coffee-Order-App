@@ -3,8 +3,8 @@ package model;
 // Represents an add-on having a name and amount.
 public class AddOn {
 
-    String addOnName;
-    int addOnNum;
+    private final String addOnName;
+    private int addOnNum;
 
     //EFFECTS: Creates an add-on and sets add-on number to 0
     public AddOn(String addOnName) {

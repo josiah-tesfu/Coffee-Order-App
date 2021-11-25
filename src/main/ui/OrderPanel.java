@@ -1,6 +1,8 @@
 package ui;
 
 import model.Drink;
+import model.Event;
+import model.EventLog;
 import model.Order;
 import persistence.JsonWriter;
 
@@ -11,26 +13,26 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+import static java.awt.Color.black;
 
+// Represents a panel which displays the current order which can be modified, completed, saved
 public class OrderPanel extends JPanel implements ActionListener {
 
-    Order order;
-    OrderAppGui orderAppGui;
-    MenuPanel menuPanel;
-    JPanel drinkList;
-    JPanel orderSummary;
-    JPanel[] drinkSummary;
-    JScrollPane drinkListPane;
-    JButton backToMenu;
-    JButton saveOrder;
-    JButton completeOrder;
-    JButton[] removeBtn;
-    static final String JSON_STORE = "./data/currentOrder.json";
-    JsonWriter jsonWriter;
-    JLabel total;
-    JLabel tax;
-    JLabel subtotal;
-    int orderSize;
+    private final Order order;
+    private final OrderAppGui orderAppGui;
+    private final MenuPanel menuPanel;
+    private final JPanel drinkList;
+    private final JPanel orderSummary;
+    private JPanel[] drinkSummary;
+    private JButton backToMenu;
+    private JButton saveOrder;
+    private JButton completeOrder;
+    private JButton[] removeBtn;
+    private static final String JSON_STORE = "./data/currentOrder.json";
+    private final JsonWriter jsonWriter;
+    private JLabel total;
+    private JLabel tax;
+    private JLabel subtotal;
 
     // MODIFIES: this
     // EFFECTS: Constructs a panel to display the order
@@ -39,13 +41,12 @@ public class OrderPanel extends JPanel implements ActionListener {
         this.orderAppGui = orderAppGui;
         this.menuPanel = menuPanel;
         this.order = order;
-        orderSize = order.size();
         removeBtn = new JButton[order.size()];
         setPreferredSize(new Dimension(Order.WIDTH, Order.HEIGHT));
         setLayout(new GridLayout(1, 2));
 
         drinkList = new JPanel();
-        drinkListPane = new JScrollPane(drinkList);
+        JScrollPane drinkListPane = new JScrollPane(drinkList);
         orderSummary = new JPanel();
         drinkSummary = new JPanel[order.size()];
         drinkList.setLayout(new BoxLayout(drinkList, BoxLayout.PAGE_AXIS));
@@ -79,7 +80,7 @@ public class OrderPanel extends JPanel implements ActionListener {
         drinkSummary[index].setLayout(new BoxLayout(drinkSummary[index], BoxLayout.PAGE_AXIS));
         addDrinkLabel(drink.getDrinkName(), index);
         addDrinkLabel("Size: " + drink.getDrinkSize(), index);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             String addOnName = drink.getAddOn(i).getAddOnName();
             int addOnNum = drink.getAddOn(i).getAddOnNum();
             if (addOnNum != 0) {
@@ -94,8 +95,9 @@ public class OrderPanel extends JPanel implements ActionListener {
         removeBtn[index].addActionListener(this);
 
         drinkSummary[index].setAlignmentX(Component.CENTER_ALIGNMENT);
-        drinkSummary[index].setBorder(BorderFactory.createEmptyBorder(30, 5, 30, 5));
+        drinkSummary[index].setBorder(BorderFactory.createLineBorder(black));
         drinkList.add(drinkSummary[index]);
+        drinkList.add(Box.createRigidArea(new Dimension(0,20)));
         index++;
         return index;
     }
@@ -158,7 +160,7 @@ public class OrderPanel extends JPanel implements ActionListener {
             } else if (obj == backToMenu) {
                 backToMenuAction();
             } else if (obj == completeOrder) {
-                completeOrderAction(obj);
+                completeOrderAction();
             }
         }
     }
@@ -178,7 +180,9 @@ public class OrderPanel extends JPanel implements ActionListener {
             jsonWriter.open();
             jsonWriter.write(order);
             jsonWriter.close();
+            order.setEvent("Order saved to file " + JSON_STORE);
             saveOrder.setText("Saved order to file " + JSON_STORE);
+
         } catch (FileNotFoundException ex) {
             saveOrder.setText("Unable to save file...");
         }
@@ -190,6 +194,7 @@ public class OrderPanel extends JPanel implements ActionListener {
         for (JButton button : removeBtn) {
             if (obj == button) {
                 int index = Arrays.asList(removeBtn).indexOf(button);
+                order.setEvent(order.getDrink(index).getDrinkName() + " has been removed from the order");
                 order.removeFromOrder(index);
                 drinkSummary[index].setVisible(false);
                 total.setText("Total: $" + order.getTotal());
@@ -232,7 +237,16 @@ public class OrderPanel extends JPanel implements ActionListener {
     }
 
 
-    private void completeOrderAction(Object obj) {
+    private void completeOrderAction() {
+        order.setEvent("Order complete.");
         orderAppGui.dispose();
+        printLog(order.getEventLog());
+    }
+
+    private void printLog(EventLog log) {
+        for (Event next : log) {
+            System.out.println(next.getDescription());
+            System.out.println(next.getDate() + "\n");
+        }
     }
 }

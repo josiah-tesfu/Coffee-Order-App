@@ -7,15 +7,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents a panel which displays the menu of drinks the user can add to the order
 public class MenuPanel extends JPanel implements ActionListener {
-    DrinkPanel drinkPanel;
-    OrderPanel orderPanel;
-    OrderAppGui orderAppGui;
-    Order order;
-    JButton[] drinkButtons;
-    JButton orderButton;
-    JLabel label;
-    GridBagConstraints constraints;
+    private final OrderAppGui orderAppGui;
+    private final Order order;
+    private final JButton[] drinkButtons;
+    private JButton orderButton;
+    private final GridBagConstraints constraints;
 
     //MODIFIES: this
     //EFFECTS: Constructs a panel that displays the menu
@@ -86,7 +84,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Adds the components at the top of the panel
     private void addTopComponents(GridBagConstraints c) {
-        label = new JLabel("Select drink");
+        JLabel label = new JLabel("Select drink");
         label.setFont(new Font("sans serif", Font.PLAIN, 80));
         specifyConstraints(1, 1, 0, 0);
         this.add(label, c);
@@ -108,14 +106,14 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         if (obj == orderButton) {
             this.setVisible(false);
-            orderPanel = new OrderPanel(order, orderAppGui, this);
+            JPanel orderPanel = new OrderPanel(order, orderAppGui, this);
             orderAppGui.add(orderPanel);
             orderPanel.setVisible(true);
 
         } else {
             for (JButton drinkButton : drinkButtons) {
                 if (obj == drinkButton) {
-                    drinkPanel = new DrinkPanel(order, orderAppGui, this, drinkButton.getText());
+                    JPanel drinkPanel = new DrinkPanel(order, orderAppGui, this, drinkButton.getText());
                     this.setVisible(false);
                     orderAppGui.add(drinkPanel);
                     drinkPanel.setVisible(true);

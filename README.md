@@ -44,4 +44,23 @@ source: The persistence code for this project is based on the JsonSerializationD
 
 source: Icon "coffee_cup.png" made by Freepik from www.flaticon.com
 
- 
+
+Phase 4: Task 2
+
+    drip coffee has been added to the order
+    Thu Nov 25 12:19:54 PST 2021
+    
+    americano has been added to the order
+    Thu Nov 25 12:19:57 PST 2021
+    
+    latte has been added to the order
+    Thu Nov 25 12:20:02 PST 2021
+    
+    americano has been removed from the order
+    Thu Nov 25 12:20:07 PST 2021
+    
+    latte has been removed from the order
+    Thu Nov 25 12:20:08 PST 2021
+    
+    Order saved to file ./data/currentOrder.json
+    Thu Nov 25 12:20:09 PST 2021
