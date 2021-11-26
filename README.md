@@ -64,3 +64,9 @@ Phase 4: Task 2
     
     Order saved to file ./data/currentOrder.json
     Thu Nov 25 12:20:09 PST 2021
+
+Phase 4: Task 3
+
+- I don't think my project needs significant refactoring, as I did a lot of that while I wrote my code.
+- I could refactor the OrderPanel class into two classes since it contains two panels: DrinkList and
+OrderSummary side by side which perform two different things.
