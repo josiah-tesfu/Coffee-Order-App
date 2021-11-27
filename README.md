@@ -48,22 +48,25 @@ source: Icon "coffee_cup.png" made by Freepik from www.flaticon.com
 Phase 4: Task 2
 
     drip coffee has been added to the order
-    Thu Nov 25 12:19:54 PST 2021
+    Fri Nov 26 16:47:13 PST 2021
+    
+    drip coffee has been removed from the order
+    Fri Nov 26 16:47:16 PST 2021
+    
+    drip coffee has been added to the order
+    Fri Nov 26 16:47:20 PST 2021
     
     americano has been added to the order
-    Thu Nov 25 12:19:57 PST 2021
-    
-    latte has been added to the order
-    Thu Nov 25 12:20:02 PST 2021
+    Fri Nov 26 16:47:22 PST 2021
     
     americano has been removed from the order
-    Thu Nov 25 12:20:07 PST 2021
-    
-    latte has been removed from the order
-    Thu Nov 25 12:20:08 PST 2021
+    Fri Nov 26 16:47:26 PST 2021
     
     Order saved to file ./data/currentOrder.json
-    Thu Nov 25 12:20:09 PST 2021
+    Fri Nov 26 16:47:29 PST 2021
+    
+    Order complete.
+    Fri Nov 26 16:47:31 PST 2021
 
 Phase 4: Task 3
 
