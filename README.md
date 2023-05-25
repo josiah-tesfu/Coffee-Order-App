@@ -1,6 +1,6 @@
-# Café Connect
+# Coffee Order App
 
-## application which adds Café items to an order
+## An application which adds Café items to an order
 
 This application will serve as the user interface side of a coffee shop order system. Users will be
 able to add items from a coffee shop to an order.
@@ -43,33 +43,3 @@ Phase 2:
 source: The persistence code for this project is based on the JsonSerializationDemo project.
 
 source: Icon "coffee_cup.png" made by Freepik from www.flaticon.com
-
-
-Phase 4: Task 2
-
-    drip coffee has been added to the order
-    Fri Nov 26 16:47:13 PST 2021
-    
-    drip coffee has been removed from the order
-    Fri Nov 26 16:47:16 PST 2021
-    
-    drip coffee has been added to the order
-    Fri Nov 26 16:47:20 PST 2021
-    
-    americano has been added to the order
-    Fri Nov 26 16:47:22 PST 2021
-    
-    americano has been removed from the order
-    Fri Nov 26 16:47:26 PST 2021
-    
-    Order saved to file ./data/currentOrder.json
-    Fri Nov 26 16:47:29 PST 2021
-    
-    Order complete.
-    Fri Nov 26 16:47:31 PST 2021
-
-Phase 4: Task 3
-
-- I don't think my project needs significant refactoring, as I did a lot of that while I wrote my code.
-- I could refactor the OrderPanel class into two classes since it contains two panels: DrinkList and
-OrderSummary side by side which perform two different things.
